@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes — Joepaul Capital Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="sidebar" id="sidebar"></div>
+  <main class="main">
+    <div class="topbar">
+      <button id="menu-btn" aria-label="Menu">☰</button>
+      <div>
+        <h1 class="page-title">Notes</h1>
+        <div class="page-sub">Weekly reviews, lessons, goals, observations.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+      <div class="card">
+        <div class="card-label" id="note-form-label">New Note</div>
+        <form id="note-form" novalidate>
+          <input type="hidden" id="n-id">
+          <div class="field">
+            <label for="n-title">Title</label>
+            <input class="input" id="n-title" type="text" placeholder="e.g. Week 42 review">
+            <div class="field-error" id="n-e-title"></div>
+          </div>
+          <div class="field">
+            <label for="n-body">Note</label>
+            <textarea class="input" id="n-body" style="min-height:160px;" placeholder="What did the market teach you this week?"></textarea>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="submit" class="btn btn-gold" id="n-save">Save Note</button>
+            <button type="button" class="btn btn-ghost" id="n-cancel" style="display:none;">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="xl:col-span-2">
+        <div id="notes-list"></div>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="js/notes.js"></script>
+</body>
+</html>

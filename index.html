@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Joepaul Capital Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="sidebar" id="sidebar"></div>
+  <main class="main">
+    <div class="topbar">
+      <button id="menu-btn" aria-label="Menu">☰</button>
+      <div>
+        <h1 class="page-title">Dashboard</h1>
+        <div class="page-sub" id="reporting-week-label">Discipline. Strategy. Freedom.</div>
+      </div>
+    </div>
+
+    <div id="starting-banner" style="display:none;"></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+      <div class="card">
+        <div class="card-label">A · Total Deposited</div>
+        <div class="card-value" id="c-deposited">—</div>
+        <div class="card-note">Personal capital contributed to trading accounts. Not profit.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">B · Total Made</div>
+        <div class="card-value value-green" id="c-made">—</div>
+        <div class="sub-line" style="margin-top:10px;"><span>Realized trading profit</span><b id="c-profit">—</b></div>
+        <div class="sub-line"><span>Confirmed prop payouts</span><b id="c-payouts">—</b></div>
+      </div>
+      <div class="card">
+        <div class="card-label">C · Total To Make</div>
+        <div class="card-value" id="c-remaining">—</div>
+        <div class="card-note">Remaining amount required to reach the financial target.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">D · Progress To Goal</div>
+        <div class="card-value" id="c-progress">—</div>
+        <div class="card-note" id="c-progress-note">Percentage of target achieved so far.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 mt-5">
+      <div class="card xl:col-span-2">
+        <div class="card-label">E · Goal Progress</div>
+        <div class="progress-track"><div class="progress-fill" id="goal-bar" style="width:0%"></div></div>
+        <div class="progress-legend">
+          <span id="goal-achieved">—</span>
+          <span id="goal-target">—</span>
+        </div>
+        <div class="card-note" style="margin-top:14px;">
+          Crediting method: realized profits <span id="crediting-method"></span>.
+          Deposits are never counted as profit.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">H · Countdown To Target</div>
+        <div class="countdown" id="countdown"></div>
+        <div class="card-note" style="margin-top:12px;" id="countdown-note"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 mt-5">
+      <div class="card">
+        <div class="card-label">F · Percentage Breakdown</div>
+        <div class="stat-pill"><span class="sp-label">Made so far</span><span class="sp-value value-green" id="p-made">—</span></div>
+        <div class="stat-pill"><span class="sp-label">Remaining to target</span><span class="sp-value" id="p-remaining">—</span></div>
+        <div class="stat-pill"><span class="sp-label">Drawdown from peak</span><span class="sp-value" id="p-drawdown">—</span></div>
+        <div class="stat-pill"><span class="sp-label">Return on deposited capital*</span><span class="sp-value" id="p-return">—</span></div>
+        <div class="hint" style="margin-top:10px;">* Simple measure: realized profit ÷ deposited capital. Not money-weighted or time-weighted; deposits made at different times limit its accuracy.</div>
+      </div>
+      <div class="card xl:col-span-2">
+        <div class="card-label">Equity History</div>
+        <div id="equity-chart"></div>
+        <div class="card-note">Account equity recorded with each weekly update.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5">
+      <div class="card">
+        <div class="card-label">G · Upcoming Events</div>
+        <div id="upcoming-events"><div class="empty-state">No upcoming events.</div></div>
+        <div style="margin-top:14px;"><a class="btn btn-ghost btn-small" href="calendar.html">Open calendar</a></div>
+      </div>
+      <div class="card">
+        <div class="card-label">I · Latest Note</div>
+        <div id="latest-note"><div class="empty-state">No notes yet.</div></div>
+        <div style="margin-top:14px;"><a class="btn btn-ghost btn-small" href="notes.html">Open notes</a></div>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

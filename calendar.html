@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar — Joepaul Capital Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="sidebar" id="sidebar"></div>
+  <main class="main">
+    <div class="topbar">
+      <button id="menu-btn" aria-label="Menu">☰</button>
+      <div>
+        <h1 class="page-title">Calendar</h1>
+        <div class="page-sub">Trading days, weekly reviews, deposits, milestones, important events.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+        <h2 class="section-title" style="margin:0;" id="cal-title">—</h2>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-ghost btn-small" id="cal-prev">← Prev</button>
+          <button class="btn btn-ghost btn-small" id="cal-today">Today</button>
+          <button class="btn btn-ghost btn-small" id="cal-next">Next →</button>
+        </div>
+      </div>
+      <div id="cal-legend" style="margin-bottom:14px;"></div>
+      <div class="cal-grid" id="cal-head"></div>
+      <div class="cal-grid" id="cal-body" style="margin-top:6px;"></div>
+      <div class="hint" style="margin-top:12px;">Click any day to add an event. Click an event chip to edit or delete it.</div>
+    </div>
+  </main>
+
+  <div class="modal-backdrop" id="ev-modal" style="display:none;">
+    <div class="modal">
+      <h3 id="ev-modal-title">Add Event</h3>
+      <form id="ev-form" novalidate>
+        <input type="hidden" id="ev-id">
+        <div class="field">
+          <label for="ev-title">Title</label>
+          <input class="input" id="ev-title" type="text" placeholder="e.g. Weekly review">
+          <div class="field-error" id="ev-e-title"></div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="ev-date">Date</label>
+            <input class="input" id="ev-date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="ev-category">Category</label>
+            <select class="input" id="ev-category"></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="ev-notes">Notes (optional)</label>
+          <textarea class="input" id="ev-notes"></textarea>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-gold" id="ev-save">Save Event</button>
+          <button type="button" class="btn btn-danger" id="ev-delete" style="display:none;">Delete</button>
+          <button type="button" class="btn btn-ghost" id="ev-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="module" src="js/calendar.js"></script>
+</body>
+</html>

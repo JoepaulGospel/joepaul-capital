@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goals — Joepaul Capital Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="sidebar" id="sidebar"></div>
+  <main class="main">
+    <div class="topbar">
+      <button id="menu-btn" aria-label="Menu">☰</button>
+      <div>
+        <h1 class="page-title">Goals</h1>
+        <div class="page-sub">The road to the target, milestone by milestone.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+      <div class="card xl:col-span-2">
+        <div class="card-label">Financial Target</div>
+        <div class="card-value" id="g-target">—</div>
+        <div class="sub-line" style="margin-top:14px;"><span>Achieved so far</span><b id="g-achieved">—</b></div>
+        <div class="sub-line"><span>Remaining</span><b id="g-remaining">—</b></div>
+        <div class="sub-line"><span>Overall progress</span><b id="g-progress">—</b></div>
+        <div style="margin-top:18px;">
+          <div class="progress-track"><div class="progress-fill" id="g-bar" style="width:0%"></div></div>
+          <div class="progress-legend"><span>0%</span><span id="g-bar-pct">—</span><span>100%</span></div>
+        </div>
+        <div id="g-milestones" style="margin-top:20px;"></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-label">Countdown To Target</div>
+          <div class="countdown" id="g-countdown"></div>
+          <div class="card-note" style="margin-top:12px;" id="g-countdown-note"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Pace Projection</div>
+          <div class="stat-pill"><span class="sp-label">Average weekly pace</span><span class="sp-value" id="g-pace">—</span></div>
+          <div class="stat-pill"><span class="sp-label">Est. weeks remaining</span><span class="sp-value" id="g-weeks">—</span></div>
+          <div class="hint" style="margin-top:10px;" id="g-pace-note">
+            Projection assumes your average credited weekly pace continues. Not a forecast — markets are not linear.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="card-label">How The Numbers Work</div>
+      <div class="hint" style="line-height:1.8;">
+        <b style="color:var(--gold);">Credited toward goal</b> = realized trading profit + confirmed prop payouts
+        (deposits excluded — your own money is not profit). Configurable in Settings.<br>
+        <b style="color:var(--gold);">Remaining</b> = max(0, target − credited). &nbsp;
+        <b style="color:var(--gold);">Progress %</b> = credited ÷ target × 100 (bar capped at 100%).<br>
+        <b style="color:var(--gold);">Return on capital</b> = realized profit ÷ deposited capital — a simple measure,
+        not money- or time-weighted. &nbsp;
+        <b style="color:var(--gold);">Drawdown</b> = (peak equity − current equity) ÷ peak equity — your personal
+        peak-to-current measure, unrelated to any prop-firm daily loss limit.
+      </div>
+    </div>
+  </main>
+  <script type="module" src="js/goals.js"></script>
+</body>
+</html>

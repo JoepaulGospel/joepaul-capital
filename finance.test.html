@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Finance module tests — Joepaul Capital</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <main class="main" style="max-width:760px; margin:0 auto;">
+    <h1 class="page-title">Finance module tests</h1>
+    <p class="page-sub">Pure calculation functions — edge cases, division-by-zero, NaN safety.</p>
+    <div id="results" style="margin-top:24px;"></div>
+  </main>
+  <script type="module">
+    import * as F from '../js/finance.js';
+
+    let pass = 0, fail = 0;
+    const host = document.getElementById('results');
+
+    function check(name, actual, expected) {
+      const ok = Object.is(actual, expected) ||
+        (typeof expected === 'number' && typeof actual === 'number' && Math.abs(actual - expected) < 1e-9);
+      const row = document.createElement('div');
+      row.className = 'card';
+      row.style.marginBottom = '10px';
+      row.style.padding = '12px 16px';
+      row.innerHTML = `<span style="color:${ok ? 'var(--green)' : 'var(--red)'};">${ok ? '✓ PASS' : '✗ FAIL'}</span>
+        &nbsp; ${name}${ok ? '' : ` — expected ${expected}, got ${actual}`}`;
+      host.appendChild(row);
+      ok ? pass++ : fail++;
+    }
+    function checkDeep(name, actual, expected) {
+      check(name, JSON.stringify(actual), JSON.stringify(expected));
+    }
+
+    // toFiniteNumber
+    check('parses "$1,234.50"', F.toFiniteNumber('$1,234.50'), 1234.5);
+    check('garbage → 0', F.toFiniteNumber('abc'), 0);
+    check('Infinity → fallback', F.toFiniteNumber(Infinity), 0);
+
+    // getTotalMade
+    check('total made sums profit + payouts', F.getTotalMade(500, 250), 750);
+    check('never negative', F.getTotalMade(-100, 50), 50);
+    check('NaN safe', F.getTotalMade('x', null), 0);
+
+    // credited toward goal
+    check('default: deposits excluded', F.getCreditedTowardGoal({ realizedProfit: 100, propPayouts: 50, totalDeposited: 3100 }), 150);
+    check('optional: deposits included', F.getCreditedTowardGoal({ realizedProfit: 100, propPayouts: 50, totalDeposited: 3100 }, true), 3250);
+
+    // remaining
+    check('remaining basic', F.getRemaining(1800000, 3250), 1796750);
+    check('remaining floors at zero', F.getRemaining(100, 250), 0);
+    check('zero target → 0', F.getRemaining(0, 100), 0);
+
+    // progress
+    checkDeep('progress 25%', F.getProgressPct(250, 1000), { pct: 25, raw: 25, exceeded: false });
+    checkDeep('progress caps at 100', F.getProgressPct(1200, 1000), { pct: 100, raw: 120, exceeded: true });
+    checkDeep('zero target safe', F.getProgressPct(100, 0), { pct: 0, raw: 0, exceeded: false });
+    checkDeep('zero everything safe', F.getProgressPct(0, 0), { pct: 0, raw: 0, exceeded: false });
+
+    // return %
+    check('return pct', F.getReturnPct(310, 3100), 10);
+    check('return null when no deposits (÷0 safe)', F.getReturnPct(100, 0), null);
+    check('return null when negative deposits', F.getReturnPct(100, -5), null);
+
+    // drawdown
+    check('drawdown 5%', F.getDrawdown(9500, 10000), 5);
+    check('drawdown never negative on new highs', F.getDrawdown(12000, 10000), 0);
+    check('drawdown zero peak safe', F.getDrawdown(500, 0), 0);
+    check('drawdown NaN safe', F.getDrawdown('a', null), 0);
+
+    // pace
+    // newest-first order, as returned by fetchWeeklyHistory()
+    const ledger = [
+      { realized_profit: 300, prop_payouts: 100, total_deposited: 3100 },
+      { realized_profit: 200, prop_payouts: 0, total_deposited: 3100 },
+    ];
+    check('weekly pace', F.getWeeklyPace(ledger), 200);
+    check('pace null with <2 entries', F.getWeeklyPace([ledger[0]]), null);
+
+    // validation
+    check('validate accepts 0', F.validateAmount('0').ok, true);
+    check('validate rejects negative', F.validateAmount('-5').ok, false);
+    check('validate rejects zero target', F.validateAmount('0', { allowZero: false }).ok, false);
+    check('validate rejects garbage', F.validateAmount('1o0').ok, false);
+
+    const summary = document.createElement('div');
+    summary.className = 'banner';
+    summary.style.marginTop = '20px';
+    summary.innerHTML = `<span><b>${pass} passed, ${fail} failed.</b></span>`;
+    host.appendChild(summary);
+    document.title = `${fail === 0 ? '✓' : '✗'} ${pass}/${pass + fail} — finance tests`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in — Joepaul Capital Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="main" style="max-width:480px; margin:0 auto; min-height:100vh; display:flex; align-items:center;">
+    <div class="card" style="width:100%; padding:36px;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+        <div class="monogram" style="width:52px; height:52px; font-size:24px;">JC</div>
+        <div>
+          <div class="brand-name" style="font-size:23px;">Joepaul Capital</div>
+          <div class="brand-sub">Terminal</div>
+        </div>
+      </div>
+      <p class="hint" style="margin:14px 0 26px;">Private access. Enter your email and we will send you a sign-in link — no password needed.</p>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="email">Email</label>
+          <input class="input" id="email" type="email" placeholder="you@example.com" autocomplete="email">
+          <div class="field-error" id="email-error"></div>
+        </div>
+        <button type="submit" class="btn btn-gold" id="login-btn" style="width:100%;">Email me a sign-in link</button>
+      </form>
+      <div id="login-message" style="margin-top:18px;"></div>
+      <div class="tagline" style="margin-top:26px; text-align:center;">Discipline. Strategy. Freedom.</div>
+    </div>
+  </main>
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>

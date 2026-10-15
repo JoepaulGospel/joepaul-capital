@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Joepaul Capital Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="sidebar" id="sidebar"></div>
+  <main class="main">
+    <div class="topbar">
+      <button id="menu-btn" aria-label="Menu">☰</button>
+      <div>
+        <h1 class="page-title">Settings</h1>
+        <div class="page-sub">Weekly updates, history, preferences, and backups.</div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:0;">Weekly Update</h2>
+    <div class="card" style="max-width:860px;">
+      <div class="hint" style="margin-bottom:18px;">
+        Update your figures once a week. Saving records the entry in your history
+        (below) and refreshes the dashboard immediately. Fields you leave unchanged
+        keep their current values.
+      </div>
+      <div id="edit-mode-banner" style="display:none;"></div>
+      <form id="weekly-form" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="f-week">Current reporting week</label>
+            <input class="input" id="f-week" type="text" placeholder="Week of 2026-10-12">
+            <div class="field-error" id="e-week"></div>
+          </div>
+          <div class="field">
+            <label for="f-deposited">Total deposited (USD)</label>
+            <input class="input" id="f-deposited" type="number" min="0" step="0.01" placeholder="3100.00">
+            <div class="field-error" id="e-deposited"></div>
+          </div>
+          <div class="field">
+            <label for="f-profit">Cumulative realized trading profit (USD)</label>
+            <input class="input" id="f-profit" type="number" min="0" step="0.01" placeholder="0.00">
+            <div class="field-error" id="e-profit"></div>
+          </div>
+          <div class="field">
+            <label for="f-payouts">Confirmed prop-firm payouts (USD)</label>
+            <input class="input" id="f-payouts" type="number" min="0" step="0.01" placeholder="0.00">
+            <div class="field-error" id="e-payouts"></div>
+          </div>
+          <div class="field">
+            <label for="f-current">Current account equity (USD)</label>
+            <input class="input" id="f-current" type="number" min="0" step="0.01" placeholder="3100.00">
+            <div class="field-error" id="e-current"></div>
+          </div>
+          <div class="field">
+            <label for="f-peak">Peak account equity (USD)</label>
+            <input class="input" id="f-peak" type="number" min="0" step="0.01" placeholder="3100.00">
+            <div class="field-error" id="e-peak"></div>
+          </div>
+          <div class="field">
+            <label for="f-target">Target financial amount (USD)</label>
+            <input class="input" id="f-target" type="number" min="0" step="0.01" placeholder="1800000">
+            <div class="field-error" id="e-target"></div>
+          </div>
+          <div class="field">
+            <label for="f-target-date">Target date</label>
+            <input class="input" id="f-target-date" type="date">
+            <div class="field-error" id="e-target-date"></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-notes">Weekly notes</label>
+          <textarea class="input" id="f-notes" placeholder="What happened this week? Lessons, mistakes, observations…"></textarea>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button type="submit" class="btn btn-gold" id="save-btn">Save Update</button>
+          <button type="button" class="btn btn-ghost" id="cancel-edit-btn" style="display:none;">Cancel edit</button>
+        </div>
+      </form>
+    </div>
+
+    <h2 class="section-title">Update History</h2>
+    <div class="card" style="max-width:1100px;">
+      <div class="table-wrap">
+        <table class="jc">
+          <thead>
+            <tr><th>Week</th><th>Saved</th><th>Deposited</th><th>Profit</th><th>Payouts</th><th>Equity</th><th>Peak</th><th>Target</th><th></th></tr>
+          </thead>
+          <tbody id="history-body">
+            <tr><td colspan="9" class="muted">No weekly updates yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2 class="section-title">Preferences</h2>
+    <div class="card" style="max-width:860px;">
+      <div class="field">
+        <label for="pref-crediting">Goal crediting method</label>
+        <label style="display:flex; gap:10px; align-items:flex-start; text-transform:none; letter-spacing:0; font-size:13px; color:var(--ivory-dim); cursor:pointer;">
+          <input type="checkbox" id="pref-crediting" style="margin-top:3px; accent-color:#C5A56A;">
+          <span>Count my deposits toward the goal total (default: only realized profits and confirmed prop payouts count).</span>
+        </label>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <button class="btn btn-gold" id="save-prefs-btn">Save Preferences</button>
+      </div>
+      <hr class="card-divider">
+      <div class="card-label">Backup &amp; Recovery</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="btn btn-ghost" id="export-btn">Export JSON</button>
+        <label class="btn btn-ghost" style="cursor:pointer;">
+          Import JSON
+          <input type="file" id="import-file" accept="application/json" style="display:none;">
+        </label>
+      </div>
+      <div class="hint" style="margin-top:12px;">
+        Export downloads your full record (figures, weekly history, events, notes) as JSON.
+        Import restores from that file. Recommendation: export after every weekly update.
+      </div>
+    </div>
+  </main>
+  <script type="module" src="js/settings.js"></script>
+</body>
+</html>
